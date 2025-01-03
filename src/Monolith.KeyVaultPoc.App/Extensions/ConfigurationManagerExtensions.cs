@@ -11,6 +11,9 @@ public static class ConfigurationManagerExtensions
     var options = new AzureKeyVaultOptions();
     manager.Bind(AzureKeyVaultOptions.AppSettingsKey, options);
 
+    var mcpOptions = new AzureKeyVaultOptions();
+    manager.Bind("OtherAzureKeyVault", mcpOptions);
+
     // set up for using local cert
     // using var x509Store = new X509Store(StoreLocation.CurrentUser);
 
@@ -35,6 +38,14 @@ public static class ConfigurationManagerExtensions
       // Using service principal secret
       new ClientSecretCredential(options.AzureADDirectoryId, options.AzureADApplicationId, options.AzureClientSecret)
     );
+
+    if (!string.IsNullOrEmpty(mcpOptions.KeyVaultName))
+    {
+      manager.AddAzureKeyVault(
+        new Uri($"https://{mcpOptions.KeyVaultName}.vault.azure.net/"),
+        new ClientSecretCredential(mcpOptions.AzureADDirectoryId, mcpOptions.AzureADApplicationId, mcpOptions.AzureClientSecret)
+      );
+    }
 
     return manager;
   }

@@ -33,4 +33,11 @@ app.MapGet("/test", () =>
 .WithName("Test")
 .WithOpenApi();
 
+app.MapGet("/test2", () =>
+{
+    return builder.Configuration.GetValue<string>("test");
+})
+.WithName("Test2")
+.WithOpenApi();
+
 app.Run();
