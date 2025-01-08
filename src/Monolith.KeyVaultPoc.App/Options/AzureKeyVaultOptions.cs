@@ -8,7 +8,4 @@ public class AzureKeyVaultOptions
   public string AzureADDirectoryId { get; set; } = string.Empty;
   public string AzureADApplicationId { get; set; } = string.Empty;
   public string AzureClientSecret { get; set; } = string.Empty;
-
-  // needed for cert
-  public string AzureADCertThumbPrint { get; set; } = string.Empty;
 }
